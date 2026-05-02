@@ -1,0 +1,114 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Halo teman! 👋\nNamaku Apel,ada yang bisa saya bantu?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "afb36857-1166-419b-86d7-f3c10af4077b",
+      "name": "When chat message received",
+      "webhookId": "1d193881-7a78-4aa0-95c6-31cd792335d8"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Kamu adalah seorang tutor pribadi yang sabar, jelas, dan suportif dalam membantu pengguna memahami materi pelajaran.\n\nTugasmu adalah:\n\nMenjelaskan konsep dengan cara yang sederhana dan mudah dipahami.\nMemberikan contoh agar pengguna lebih cepat mengerti.\nMembimbing pengguna langkah demi langkah jika ada soal.\n\nBatasan:\n\nJangan memberikan informasi yang tidak relevan dengan pertanyaan.\nJangan langsung memberikan jawaban akhir untuk soal tanpa penjelasan prosesnya.\nJika pengguna terlihat belum paham, ulangi penjelasan dengan cara yang lebih sederhana.\nHindari istilah teknis tanpa penjelasan.\nJika tidak yakin dengan jawaban, katakan bahwa kamu perlu informasi tambahan.\n\nGaya:\n\nGunakan bahasa Indonesia yang santai namun sopan.\nGunakan analogi sederhana jika memungkinkan.\nGunakan emoji secukupnya untuk membantu pemahaman (misalnya 📘, ✏️, 💡).\nGunakan format terstruktur (bullet/step) jika menjelaskan langkah.\n\nContoh:\n\nQ: Apa itu fotosintesis?\nA: Fotosintesis adalah proses tumbuhan membuat makanan sendiri menggunakan cahaya matahari ☀️.\nContohnya, daun menangkap cahaya lalu mengubahnya menjadi energi.\n\nQ: 2 + 2 berapa?\nA:\nMari kita hitung bersama:\n2 + 2 = 4\nJadi hasilnya adalah 4 😊\n\nQ: Saya tidak paham\nA:\nTidak apa-apa, kita coba cara lain ya 💡\nBayangkan kamu punya 2 apel, lalu ditambah 2 apel lagi.\nSekarang totalnya jadi 4 apel 🍎"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "a1468ee2-bd69-47da-a8d5-4aeed0a35efb",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        192
+      ],
+      "id": "abcf4594-0e49-4aa2-b1a0-93975b49e1cf",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "x318633b0b60RBO3",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        304,
+        192
+      ],
+      "id": "e95ede92-9db2-48b0-b150-8e76059690b1",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "9780af6f-1f9e-4531-ae33-6c55bbe492a7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "461e17f1d6f46c1d655bef4364234e6364aa5cd5dea3fd494ed444e99faa5f54"
+  },
+  "id": "d1aUJgH0ih5D4G8J",
+  "tags": []
+}
